@@ -111,36 +111,47 @@ ALTER TABLE public.jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.resume_bank ENABLE ROW LEVEL SECURITY;
 
+-- SECURITY DEFINER FUNCTION TO AVOID INFINITE RECURSION
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE id = auth.uid() AND role = 'admin'
+  );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- Profiles RLS
 CREATE POLICY "Users can view their own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);
 CREATE POLICY "Users can update their own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
 CREATE POLICY "Admins can view all profiles" ON public.profiles FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 
 -- Jobs RLS
 CREATE POLICY "Public can view active jobs" ON public.jobs FOR SELECT USING (status = 'active' OR auth.role() = 'authenticated');
 CREATE POLICY "Authenticated admins can manage jobs" ON public.jobs FOR ALL USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 
 -- Applications RLS
 CREATE POLICY "Public can insert applications" ON public.applications FOR INSERT WITH CHECK (true);
 CREATE POLICY "Users can view their own applications" ON public.applications FOR SELECT USING (auth.uid() = candidate_id);
 CREATE POLICY "Authenticated admins can view applications" ON public.applications FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 CREATE POLICY "Authenticated admins can delete applications" ON public.applications FOR DELETE USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 
 -- Resume Bank RLS
 CREATE POLICY "Public can submit to resume bank" ON public.resume_bank FOR INSERT WITH CHECK (true);
 CREATE POLICY "Authenticated admins can view resume bank" ON public.resume_bank FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 CREATE POLICY "Authenticated admins can delete resume bank entries" ON public.resume_bank FOR DELETE USING (
-  EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  public.is_admin()
 );
 
 -- SUPABASE STORAGE BUCKET CONFIGURATION FOR RESUMES
