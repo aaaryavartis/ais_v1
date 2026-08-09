@@ -57,7 +57,7 @@ export function ApplyModal({ job, isOpen, onClose }: ApplyModalProps) {
   useEffect(() => {
     async function checkDuplicate() {
       if (isOpen && job) {
-        const loggedInCand = CandidateService.getCurrentCandidate();
+        const loggedInCand = await CandidateService.getCurrentCandidate();
         setCandidate(loggedInCand);
         setAlreadyApplied(false);
         setCheckingApplied(true);

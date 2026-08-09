@@ -46,22 +46,25 @@ export default function AdminDashboardPage() {
 
   // Authentication check
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const currentUser = UserService.getCurrentUser();
-      const legacyAdminSession = localStorage.getItem('aarya_raakh_admin_session');
+    const checkAuth = async () => {
+      if (typeof window !== 'undefined') {
+        const currentUser = await UserService.getCurrentUser();
+        const legacyAdminSession = localStorage.getItem('aarya_raakh_admin_session');
 
-      if (!currentUser && !legacyAdminSession) {
-        router.push('/login');
-        return;
-      }
+        if (!currentUser && !legacyAdminSession) {
+          router.push('/login');
+          return;
+        }
 
-      if (currentUser && currentUser.role !== 'admin') {
-        toast.error('Access denied. Admin role permission required.');
-        router.push('/candidate/dashboard');
-        return;
+        if (currentUser && currentUser.role !== 'admin') {
+          toast.error('Access denied. Admin role permission required.');
+          router.push('/candidate/dashboard');
+          return;
+        }
       }
-    }
-    fetchData();
+      fetchData();
+    };
+    checkAuth();
   }, [router]);
 
   const fetchData = async () => {
@@ -72,7 +75,7 @@ export default function AdminDashboardPage() {
         DataService.getApplications(),
         DataService.getResumeBank(),
       ]);
-      const usersData = UserService.getAllUsers();
+      const usersData = await UserService.getAllUsers();
       setJobs(jobsData);
       setApplications(appsData);
       setResumeBank(rbData);
@@ -92,18 +95,26 @@ export default function AdminDashboardPage() {
   };
 
   // User Roles Management Handlers
-  const handleUserRoleChange = (userId: string, newRole: UserRole) => {
-    const success = UserService.updateUserRole(userId, newRole);
-    if (success) {
-      toast.success(`User role updated to ${newRole.toUpperCase()}`);
-      fetchData();
+  const handleUserRoleChange = async (userId: string, newRole: UserRole) => {
+    try {
+      const success = await UserService.updateUserRole(userId, newRole);
+      if (success) {
+        toast.success(`User role updated to ${newRole.toUpperCase()}`);
+        fetchData();
+      }
+    } catch (e) {
+      toast.error('Failed to update user role');
     }
   };
 
-  const handleUserStatusToggle = (userId: string) => {
-    const newStatus = UserService.toggleUserStatus(userId);
-    toast.info(`User status changed to ${newStatus.toUpperCase()}`);
-    fetchData();
+  const handleUserStatusToggle = async (userId: string) => {
+    try {
+      const newStatus = await UserService.toggleUserStatus(userId);
+      toast.info(`User status changed to ${newStatus.toUpperCase()}`);
+      fetchData();
+    } catch (e) {
+      toast.error('Failed to toggle user status');
+    }
   };
 
   // Job CRUD Handlers

@@ -66,13 +66,10 @@ function ResetPasswordForm() {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    if (!token) {
-      setTokenValid(false);
-      return;
-    }
-    const email = CandidateService.verifyResetToken(token);
-    setTokenEmail(email);
-    setTokenValid(!!email);
+    // With Supabase, the token verification is handled automatically by the client
+    // when the user clicks the email link.
+    setTokenValid(true);
+    setTokenEmail('your account');
   }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,16 +87,14 @@ function ResetPasswordForm() {
     setIsLoading(true);
     await new Promise((r) => setTimeout(r, 700));
 
-    const success = CandidateService.resetPassword(token, password);
-    setIsLoading(false);
-
-    if (success) {
+    try {
+      await CandidateService.resetPassword(password);
       setIsDone(true);
       toast.success('Password reset successfully! Please sign in.');
-    } else {
+    } catch (e) {
       toast.error('Reset link has expired or is invalid. Please request a new one.');
-      setTokenValid(false);
     }
+    setIsLoading(false);
   };
 
   // Loading state while verifying token

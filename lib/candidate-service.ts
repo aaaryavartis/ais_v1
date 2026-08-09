@@ -1,181 +1,141 @@
 import { CandidateUser, Application } from './types';
-import { DataService } from './data-service';
-
-const CANDIDATE_STORAGE_KEYS = {
-  CURRENT_USER: 'aarya_raakh_candidate_session_v1',
-  USERS_LIST: 'aarya_raakh_candidate_users_v1',
-  RESET_TOKENS: 'aarya_raakh_reset_tokens_v1',
-};
-
-interface ResetToken {
-  token: string;
-  email: string;
-  expiresAt: number; // Unix ms timestamp
-}
-
-const DEFAULT_DEMO_CANDIDATE: CandidateUser = {
-  id: 'cand-demo-1',
-  name: 'Rahul Sharma',
-  email: 'candidate@example.com',
-  role: 'candidate',
-  status: 'active',
-  phone: '+91 98765 43210',
-  location: 'Mumbai, Maharashtra',
-  qualification: 'B.Tech in Computer Science',
-  experience: '4 Years',
-  linkedin: 'https://linkedin.com/in/rahul-sharma-demo',
-  resume_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-  created_at: new Date().toISOString(),
-};
-
-function getLocal<T>(key: string, defaultVal: T): T {
-  if (typeof window === 'undefined') return defaultVal;
-  try {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : defaultVal;
-  } catch (e) {
-    return defaultVal;
-  }
-}
-
-function setLocal<T>(key: string, val: T): void {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(key, JSON.stringify(val));
-  } catch (e) {
-    console.error('LocalStorage write failed:', e);
-  }
-}
+import { createClient } from './supabase/client';
 
 export const CandidateService = {
-  getCurrentCandidate(): CandidateUser | null {
-    return getLocal<CandidateUser | null>(CANDIDATE_STORAGE_KEYS.CURRENT_USER, null);
+  async getCurrentCandidate(): Promise<CandidateUser | null> {
+    const supabase = createClient();
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) return null;
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (profileError || !profile) return null;
+
+    return {
+      ...profile,
+      email: user.email,
+    } as CandidateUser;
   },
 
-  isLoggedIn(): boolean {
-    const candidate = this.getCurrentCandidate();
-    return Boolean(candidate && candidate.id && candidate.email);
+  async isLoggedIn(): Promise<boolean> {
+    const candidate = await this.getCurrentCandidate();
+    return Boolean(candidate);
   },
 
-  loginCandidate(email: string): CandidateUser {
-    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, [DEFAULT_DEMO_CANDIDATE]);
-    let candidate = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-
-    if (!candidate) {
-      // Auto-create candidate profile for demo login if email matches demo
-      candidate = {
-        ...DEFAULT_DEMO_CANDIDATE,
-        email: email,
-        name: email.split('@')[0].replace('.', ' '),
-      };
-      users.push(candidate);
-      setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
-    }
-
-    setLocal(CANDIDATE_STORAGE_KEYS.CURRENT_USER, candidate);
+  async loginCandidate(email: string, password?: string): Promise<CandidateUser> {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password: password || 'Candidate@123', // Default for demo if not provided
+    });
+    
+    if (error) throw error;
+    
+    const candidate = await this.getCurrentCandidate();
+    if (!candidate) throw new Error('Could not fetch candidate profile after login');
     return candidate;
   },
 
-  registerCandidate(data: Omit<CandidateUser, 'id' | 'created_at' | 'role' | 'status'>): CandidateUser {
-    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, [DEFAULT_DEMO_CANDIDATE]);
-    
-    // Check if email already registered
-    const existing = users.find((u) => u.email.toLowerCase() === data.email.toLowerCase());
-    if (existing) {
-      const updated = { ...existing, ...data };
-      const idx = users.findIndex((u) => u.id === existing.id);
-      users[idx] = updated;
-      setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
-      setLocal(CANDIDATE_STORAGE_KEYS.CURRENT_USER, updated);
-      return updated;
-    }
+  async registerCandidate(data: Omit<CandidateUser, 'id' | 'created_at' | 'role' | 'status'>, password?: string): Promise<CandidateUser> {
+    const supabase = createClient();
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: data.email,
+      password: password || 'Candidate@123',
+      options: {
+        data: {
+          name: data.name,
+          role: 'candidate',
+        }
+      }
+    });
 
-    const newCandidate: CandidateUser = {
-      ...data,
-      role: 'candidate',
-      status: 'active',
-      id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'cand-' + Date.now(),
-      created_at: new Date().toISOString(),
+    if (authError) throw authError;
+    if (!authData.user) throw new Error('Registration failed');
+
+    // Wait a brief moment for the trigger to insert the profile
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Update the generated profile with the rest of the data
+    const profileUpdates = {
+      phone: data.phone,
+      location: data.location,
+      qualification: data.qualification,
+      experience: data.experience,
+      linkedin: data.linkedin,
+      resume_url: data.resume_url,
     };
 
-    users.push(newCandidate);
-    setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
-    setLocal(CANDIDATE_STORAGE_KEYS.CURRENT_USER, newCandidate);
-    return newCandidate;
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update(profileUpdates)
+      .eq('id', authData.user.id);
+
+    if (updateError) throw updateError;
+
+    const candidate = await this.getCurrentCandidate();
+    if (!candidate) throw new Error('Could not fetch candidate profile after registration');
+    return candidate;
   },
 
-  updateProfile(updates: Partial<CandidateUser>): CandidateUser | null {
-    const current = this.getCurrentCandidate();
+  async updateProfile(updates: Partial<CandidateUser>): Promise<CandidateUser | null> {
+    const current = await this.getCurrentCandidate();
     if (!current) return null;
 
-    const updated = { ...current, ...updates };
-    setLocal(CANDIDATE_STORAGE_KEYS.CURRENT_USER, updated);
+    const supabase = createClient();
+    const { error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', current.id);
 
-    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, [DEFAULT_DEMO_CANDIDATE]);
-    const idx = users.findIndex((u) => u.email === current.email);
-    if (idx !== -1) {
-      users[idx] = updated;
-      setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
-    }
+    if (error) throw error;
 
-    return updated;
+    return this.getCurrentCandidate();
   },
 
-  logoutCandidate(): void {
-    if (typeof window === 'undefined') return;
-    localStorage.removeItem(CANDIDATE_STORAGE_KEYS.CURRENT_USER);
+  async logoutCandidate(): Promise<void> {
+    const supabase = createClient();
+    await supabase.auth.signOut();
   },
 
   async getMyAppliedJobs(): Promise<Application[]> {
-    const current = this.getCurrentCandidate();
+    const current = await this.getCurrentCandidate();
     if (!current) return [];
-    const allApps = await DataService.getApplications();
-    return allApps.filter((a) => a.email.toLowerCase() === current.email.toLowerCase());
+    
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('applications')
+      .select('*, jobs(title)')
+      .eq('candidate_id', current.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    return data.map((item: any) => ({
+      ...item,
+      job_title: item.jobs?.title || item.job_title || 'Unknown Position',
+    }));
   },
 
   // ── Password Reset ──────────────────────────────────────────────
 
-  generateResetToken(email: string): string | null {
-    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, []);
-    const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) return null; // email not registered
-
-    const token = Array.from(crypto.getRandomValues(new Uint8Array(24)))
-      .map((b) => b.toString(16).padStart(2, '0'))
-      .join('');
-
-    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
-    // Remove any old token for this email
-    const filtered = tokens.filter((t) => t.email.toLowerCase() !== email.toLowerCase());
-    filtered.push({ token, email: user.email, expiresAt: Date.now() + 15 * 60 * 1000 }); // 15 min
-    setLocal(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, filtered);
-    return token;
+  async generateResetToken(email: string): Promise<string | null> {
+    const supabase = createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    
+    if (error) throw error;
+    return "SENT"; // Supabase sends an email, we don't return a raw token
   },
 
-  verifyResetToken(token: string): string | null {
-    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
-    const entry = tokens.find((t) => t.token === token);
-    if (!entry) return null;
-    if (Date.now() > entry.expiresAt) return null; // expired
-    return entry.email;
-  },
-
-  resetPassword(token: string, newPassword: string): boolean {
-    const email = this.verifyResetToken(token);
-    if (!email) return false;
-
-    // In this localStorage-based auth, we store password hash (plain for demo)
-    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, []);
-    const idx = users.findIndex((u) => u.email.toLowerCase() === email.toLowerCase());
-    if (idx === -1) return false;
-
-    // Store the new password (in real Supabase this would call supabase.auth.updateUser)
-    (users[idx] as any).password = newPassword;
-    setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
-
-    // Invalidate the token
-    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
-    setLocal(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, tokens.filter((t) => t.token !== token));
+  async resetPassword(password: string): Promise<boolean> {
+    const supabase = createClient();
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) throw error;
     return true;
-  },
+  }
 };

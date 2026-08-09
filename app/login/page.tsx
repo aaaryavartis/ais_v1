@@ -12,7 +12,7 @@ export default function UnifiedLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast.error('Please enter your email address');
@@ -20,7 +20,7 @@ export default function UnifiedLoginPage() {
     }
 
     try {
-      const user = UserService.login(email);
+      const user = await UserService.login(email, password);
       if (user) {
         toast.success(`Welcome back, ${user.name}! Signed in as ${user.role.toUpperCase()}`);
         if (user.role === 'admin') {

@@ -41,19 +41,22 @@ export default function CandidateDashboardPage() {
   const [savingProfile, setSavingProfile] = useState(false);
 
   useEffect(() => {
-    const current = CandidateService.getCurrentCandidate();
-    if (!current) {
-      router.push('/candidate/login');
-      return;
-    }
-    setCandidate(current);
-    setPhone(current.phone || '');
-    setLocation(current.location || '');
-    setQualification(current.qualification || '');
-    setExperience(current.experience || '');
-    setLinkedin(current.linkedin || '');
+    const checkAuth = async () => {
+      const current = await CandidateService.getCurrentCandidate();
+      if (!current) {
+        router.push('/candidate/login');
+        return;
+      }
+      setCandidate(current);
+      setPhone(current.phone || '');
+      setLocation(current.location || '');
+      setQualification(current.qualification || '');
+      setExperience(current.experience || '');
+      setLinkedin(current.linkedin || '');
 
-    fetchApplications();
+      fetchApplications();
+    };
+    checkAuth();
   }, [router]);
 
   const fetchApplications = async () => {
@@ -74,19 +77,23 @@ export default function CandidateDashboardPage() {
     router.push('/candidate/login');
   };
 
-  const handleUpdateProfile = (e: React.FormEvent) => {
+  const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingProfile(true);
-    const updated = CandidateService.updateProfile({
-      phone,
-      location,
-      qualification,
-      experience,
-      linkedin,
-    });
-    if (updated) {
-      setCandidate(updated);
-      toast.success('Candidate profile updated successfully!');
+    try {
+      const updated = await CandidateService.updateProfile({
+        phone,
+        location,
+        qualification,
+        experience,
+        linkedin,
+      });
+      if (updated) {
+        setCandidate(updated);
+        toast.success('Candidate profile updated successfully!');
+      }
+    } catch (error) {
+      toast.error('Failed to update profile');
     }
     setSavingProfile(false);
   };

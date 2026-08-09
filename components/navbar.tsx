@@ -13,7 +13,11 @@ export function Navbar() {
   const [currentUser, setCurrentUser] = useState<UserAccount | null>(null);
 
   useEffect(() => {
-    setCurrentUser(UserService.getCurrentUser());
+    const fetchUser = async () => {
+      const user = await UserService.getCurrentUser();
+      setCurrentUser(user);
+    };
+    fetchUser();
   }, [pathname]);
 
   const navLinks = [

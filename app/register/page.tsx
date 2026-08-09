@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { UserService } from '@/lib/user-service';
+import { CandidateService } from '@/lib/candidate-service';
 import { DataService } from '@/lib/data-service';
 import { UserPlus, Upload, FileText, Loader2, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -28,7 +28,7 @@ export default function UnifiedRegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone || !location || !qualification || !experience || !preferredRole || !skills) {
+    if (!name || !email || !password || !phone || !location || !qualification || !experience || !preferredRole || !skills) {
       toast.error('Please fill in all required profile fields');
       return;
     }
@@ -45,7 +45,7 @@ export default function UnifiedRegisterPage() {
         .map((s) => s.trim())
         .filter(Boolean);
 
-      UserService.registerCandidate({
+      await CandidateService.registerCandidate({
         name,
         email,
         phone,
@@ -58,7 +58,7 @@ export default function UnifiedRegisterPage() {
         linkedin,
         notes,
         resume_url: resumeUrl,
-      });
+      }, password);
 
       setLoading(false);
       toast.success('Candidate Account & Resume Profile registered successfully!');

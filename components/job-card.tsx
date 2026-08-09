@@ -18,7 +18,7 @@ export function JobCard({ job, onApplyClick }: JobCardProps) {
 
   useEffect(() => {
     async function checkStatus() {
-      const candidate = CandidateService.getCurrentCandidate();
+      const candidate = await CandidateService.getCurrentCandidate();
       if (candidate?.email) {
         const applied = await DataService.hasCandidateApplied(job.id, candidate.email);
         setAlreadyApplied(applied);
