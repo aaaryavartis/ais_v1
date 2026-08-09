@@ -20,22 +20,15 @@ export default function ForgotPasswordPage() {
     }
 
     setIsLoading(true);
-    // Small artificial delay for UX
-    await new Promise((r) => setTimeout(r, 900));
 
-    const token = CandidateService.generateResetToken(email);
-    setIsLoading(false);
-
-    if (!token) {
-      // Don't reveal whether email exists — show same success UI (security best practice)
-      toast.info('If this email is registered, a reset link will appear below.');
+    try {
+      await CandidateService.generateResetToken(email);
+      setIsSent(true);
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to send reset link.');
+    } finally {
+      setIsLoading(false);
     }
-
-    // Build the reset URL with token
-    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    const link = token ? `${origin}/reset-password?token=${token}` : '';
-    setResetLink(link);
-    setIsSent(true);
   };
 
   return (
@@ -121,42 +114,22 @@ export default function ForgotPasswordPage() {
                 <CheckCircle2 className="w-9 h-9" />
               </div>
               <div className="space-y-1">
-                <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">Check Your Link Below</h2>
+                <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">Check Your Inbox!</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
-                  Since this app uses local auth (no email server), your reset link is shown directly below. In production, this would arrive in your inbox.
+                  If an account exists for that email, we have sent a password reset link to your inbox.
+                  Click the link in the email to set a new password.
                 </p>
               </div>
 
-              {resetLink ? (
-                <div className="space-y-3">
-                  {/* Reset link display box */}
-                  <div className="p-4 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-left space-y-2">
-                    <p className="text-[10px] font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">
-                      Your Password Reset Link (valid 15 minutes):
-                    </p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300 break-all font-mono">
-                      {resetLink}
-                    </p>
-                  </div>
-
-                  <Link
-                    href={resetLink}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-600/25 transition"
-                  >
-                    <KeyRound className="w-4 h-4" />
-                    Open Reset Password Page
-                  </Link>
-                </div>
-              ) : (
-                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-3 text-left">
-                  <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    This email is not registered in our system. Please{' '}
-                    <Link href="/register" className="font-bold hover:underline">create a free account</Link>{' '}
-                    or try a different email.
-                  </p>
-                </div>
-              )}
+              <div className="pt-4">
+                <Link
+                  href="/login"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-600/25 transition"
+                >
+                  <KeyRound className="w-4 h-4" />
+                  Return to Sign In
+                </Link>
+              </div>
 
               <button
                 onClick={() => { setIsSent(false); setEmail(''); setResetLink(''); }}
