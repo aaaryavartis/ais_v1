@@ -142,8 +142,11 @@ export const DataService = {
       throw new Error('You have already submitted an application for this job position.');
     }
 
+    // Strip out fields that do not exist in the database schema
+    const { job_title, status, ...dbInsertData } = appData as any;
+
     const supabase = createClient();
-    const { data, error } = await supabase.from('applications').insert([appData]).select().single();
+    const { data, error } = await supabase.from('applications').insert([dbInsertData]).select().single();
     if (error) throw error;
     return data as Application;
   },
