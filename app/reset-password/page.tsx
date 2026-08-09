@@ -58,6 +58,7 @@ function ResetPasswordForm() {
 
   const [tokenEmail, setTokenEmail] = useState<string | null>(null);
   const [tokenValid, setTokenValid] = useState<boolean | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -66,11 +67,19 @@ function ResetPasswordForm() {
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
+    // Check if Supabase redirected back with an error (e.g. expired link)
+    const errorDesc = searchParams.get('error_description');
+    if (errorDesc) {
+      setErrorMessage(errorDesc.replace(/\+/g, ' '));
+      setTokenValid(false);
+      return;
+    }
+
     // With Supabase, the token verification is handled automatically by the client
     // when the user clicks the email link.
     setTokenValid(true);
     setTokenEmail('your account');
-  }, [token]);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,24 +117,26 @@ function ResetPasswordForm() {
   }
 
   // Invalid / expired token
-  if (!tokenValid) {
+  if (tokenValid === false) {
     return (
-      <div className="text-center space-y-5 py-4">
-        <div className="w-16 h-16 bg-red-100 dark:bg-red-950/30 text-red-500 rounded-full flex items-center justify-center mx-auto">
-          <XCircle className="w-9 h-9" />
+      <div className="text-center space-y-4 py-6 animate-fadeIn">
+        <div className="w-16 h-16 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-full flex items-center justify-center mx-auto">
+          <XCircle className="w-8 h-8" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">Link Invalid or Expired</h2>
-          <p className="text-xs text-slate-500 max-w-xs mx-auto">
-            This password reset link is no longer valid. Reset links expire after 15 minutes.
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Invalid Link</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+            {errorMessage || 'Reset link has expired or is invalid. Please request a new one.'}
           </p>
         </div>
-        <Link
-          href="/forgot-password"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-600/25 transition"
-        >
-          Request a New Reset Link
-        </Link>
+        <div className="pt-2">
+          <Link
+            href="/forgot-password"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 text-white font-bold text-xs shadow-md shadow-brand-600/25 hover:bg-brand-700 transition"
+          >
+            Request New Link
+          </Link>
+        </div>
       </div>
     );
   }
