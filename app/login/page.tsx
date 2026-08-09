@@ -118,9 +118,17 @@ export default function UnifiedLoginPage() {
 
           {/* Password */}
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
-              Password *
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                Password *
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-[11px] text-brand-600 hover:underline font-semibold"
+              >
+                Forgot password?
+              </Link>
+            </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <input

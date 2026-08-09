@@ -4,7 +4,14 @@ import { DataService } from './data-service';
 const CANDIDATE_STORAGE_KEYS = {
   CURRENT_USER: 'aarya_raakh_candidate_session_v1',
   USERS_LIST: 'aarya_raakh_candidate_users_v1',
+  RESET_TOKENS: 'aarya_raakh_reset_tokens_v1',
 };
+
+interface ResetToken {
+  token: string;
+  email: string;
+  expiresAt: number; // Unix ms timestamp
+}
 
 const DEFAULT_DEMO_CANDIDATE: CandidateUser = {
   id: 'cand-demo-1',
@@ -42,12 +49,12 @@ function setLocal<T>(key: string, val: T): void {
 
 export const CandidateService = {
   getCurrentCandidate(): CandidateUser | null {
-    return getLocal<CandidateUser | null>(CANDIDATE_STORAGE_KEYS.CURRENT_USER, DEFAULT_DEMO_CANDIDATE);
+    return getLocal<CandidateUser | null>(CANDIDATE_STORAGE_KEYS.CURRENT_USER, null);
   },
 
   isLoggedIn(): boolean {
     const candidate = this.getCurrentCandidate();
-    return Boolean(candidate && candidate.email);
+    return Boolean(candidate && candidate.id && candidate.email);
   },
 
   loginCandidate(email: string): CandidateUser {
@@ -124,5 +131,51 @@ export const CandidateService = {
     if (!current) return [];
     const allApps = await DataService.getApplications();
     return allApps.filter((a) => a.email.toLowerCase() === current.email.toLowerCase());
+  },
+
+  // ── Password Reset ──────────────────────────────────────────────
+
+  generateResetToken(email: string): string | null {
+    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, []);
+    const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) return null; // email not registered
+
+    const token = Array.from(crypto.getRandomValues(new Uint8Array(24)))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
+    // Remove any old token for this email
+    const filtered = tokens.filter((t) => t.email.toLowerCase() !== email.toLowerCase());
+    filtered.push({ token, email: user.email, expiresAt: Date.now() + 15 * 60 * 1000 }); // 15 min
+    setLocal(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, filtered);
+    return token;
+  },
+
+  verifyResetToken(token: string): string | null {
+    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
+    const entry = tokens.find((t) => t.token === token);
+    if (!entry) return null;
+    if (Date.now() > entry.expiresAt) return null; // expired
+    return entry.email;
+  },
+
+  resetPassword(token: string, newPassword: string): boolean {
+    const email = this.verifyResetToken(token);
+    if (!email) return false;
+
+    // In this localStorage-based auth, we store password hash (plain for demo)
+    const users = getLocal<CandidateUser[]>(CANDIDATE_STORAGE_KEYS.USERS_LIST, []);
+    const idx = users.findIndex((u) => u.email.toLowerCase() === email.toLowerCase());
+    if (idx === -1) return false;
+
+    // Store the new password (in real Supabase this would call supabase.auth.updateUser)
+    (users[idx] as any).password = newPassword;
+    setLocal(CANDIDATE_STORAGE_KEYS.USERS_LIST, users);
+
+    // Invalidate the token
+    const tokens = getLocal<ResetToken[]>(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, []);
+    setLocal(CANDIDATE_STORAGE_KEYS.RESET_TOKENS, tokens.filter((t) => t.token !== token));
+    return true;
   },
 };

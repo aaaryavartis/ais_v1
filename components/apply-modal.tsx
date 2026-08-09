@@ -5,10 +5,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Job, CandidateUser } from '@/lib/types';
 import { DataService } from '@/lib/data-service';
 import { CandidateService } from '@/lib/candidate-service';
-import { X, Upload, CheckCircle2, FileText, Loader2, AlertCircle, Zap, ShieldCheck, UserCheck, AlertTriangle } from 'lucide-react';
+import { X, Upload, CheckCircle2, FileText, Loader2, AlertCircle, Zap, ShieldCheck, UserCheck, AlertTriangle, LogIn, UserPlus, Lock } from 'lucide-react';
 import { toast } from 'sonner';
 
 const applySchema = z.object({
@@ -30,6 +31,7 @@ interface ApplyModalProps {
 }
 
 export function ApplyModal({ job, isOpen, onClose }: ApplyModalProps) {
+  const router = useRouter();
   const [candidate, setCandidate] = useState<CandidateUser | null>(null);
   const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
   const [checkingApplied, setCheckingApplied] = useState<boolean>(false);
@@ -208,7 +210,50 @@ export function ApplyModal({ job, isOpen, onClose }: ApplyModalProps) {
           <X className="w-5 h-5" />
         </button>
 
-        {isSubmitted ? (
+        {/* ── NOT LOGGED IN: Force login/register prompt ── */}
+        {!candidate ? (
+          <div className="py-8 flex flex-col items-center text-center space-y-6">
+            <div className="w-20 h-20 rounded-full bg-brand-500/10 border-2 border-brand-500/30 flex items-center justify-center">
+              <Lock className="w-9 h-9 text-brand-600 dark:text-brand-400" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
+                Login Required to Apply
+              </h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+                You need to be logged in to apply for{' '}
+                <span className="font-semibold text-slate-700 dark:text-slate-200">{job?.title}</span>.
+                {' '}Sign in or create a free account to continue.
+              </p>
+            </div>
+
+            <div className="w-full space-y-3 pt-2">
+              <Link
+                href={`/login?redirect=/`}
+                onClick={handleModalClose}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-bold text-sm shadow-lg shadow-brand-600/25 transition"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign In to Your Account
+              </Link>
+              <Link
+                href={`/register?redirect=/`}
+                onClick={handleModalClose}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl border-2 border-brand-500/40 hover:border-brand-500 hover:bg-brand-500/5 text-brand-600 dark:text-brand-400 font-bold text-sm transition"
+              >
+                <UserPlus className="w-4 h-4" />
+                Create a Free Account
+              </Link>
+            </div>
+
+            <p className="text-[11px] text-slate-400">
+              Already have an account?{' '}
+              <Link href="/login" onClick={handleModalClose} className="text-brand-600 font-semibold hover:underline">
+                Sign in here
+              </Link>
+            </p>
+          </div>
+        ) : isSubmitted ? (
           <div className="py-10 text-center space-y-4">
             <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-inner">
               <CheckCircle2 className="w-10 h-10" />
