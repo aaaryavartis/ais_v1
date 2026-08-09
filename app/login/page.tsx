@@ -36,13 +36,13 @@ export default function UnifiedLoginPage() {
 
   const handleAutofillAdmin = () => {
     setEmail('admin@aaryaraakh.com');
-    setPassword('Admin@12345');
+    setPassword('0999#jay');
     toast.info('Demo Admin credentials autofilled!');
   };
 
   const handleAutofillCandidate = () => {
-    setEmail('candidate@example.com');
-    setPassword('Candidate@12345');
+    setEmail('jaygangurde8@gmail.com');
+    setPassword('Candidate@123');
     toast.info('Demo Candidate credentials autofilled!');
   };
 
@@ -78,7 +78,7 @@ export default function UnifiedLoginPage() {
             <div className="font-bold text-brand-600 text-[11px] flex items-center gap-1">
               <UserCheck className="w-3 h-3" /> Candidate Login
             </div>
-            <div className="text-[10px] text-slate-500 truncate">candidate@example.com</div>
+            <div className="text-[10px] text-slate-500 truncate">jaygangurde8@gmail.com</div>
           </button>
 
           <button

@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
 
   const handleAutofillDemo = () => {
     setEmail('admin@aaryaraakh.com');
-    setPassword('Admin@12345');
+    setPassword('0999#jay');
     toast.info('Demo admin credentials autofilled!');
   };
 
