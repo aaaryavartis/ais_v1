@@ -33,8 +33,8 @@ export function Navbar() {
           
           {/* Logo & Branding */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-              <Building2 className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+              <img src="/logo.svg" alt="Aarya Raakh Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">

@@ -13,8 +13,8 @@ export function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-brand-600 text-white flex items-center justify-center font-bold shadow-md shadow-brand-600/20">
-                <Building2 className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden">
+                <img src="/logo.svg" alt="Aarya Raakh Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold text-slate-900 dark:text-white">
                 Aarya Raakh
