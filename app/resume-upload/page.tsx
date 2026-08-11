@@ -113,7 +113,7 @@ export default function ResumeUploadPage() {
           Candidate Portal
         </span>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Join Aarya Raakh Candidate Resume Bank
+          Join Aaryavart integrated services Candidate Resume Bank
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Don&apos;t see a matching position today? Upload your resume so our executive recruiters can match you with upcoming enterprise opportunities.
@@ -131,7 +131,7 @@ export default function ResumeUploadPage() {
               Your profile & resume have been registered successfully!
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-              Our talent acquisition team at Aarya Raakh will index your skills and contact you as soon as a suitable opening matching your preferred role arises.
+              Our talent acquisition team at Aaryavart integrated services will index your skills and contact you as soon as a suitable opening matching your preferred role arises.
             </p>
             <div className="pt-4">
               <button

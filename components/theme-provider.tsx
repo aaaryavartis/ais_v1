@@ -20,8 +20,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Load saved preferences
-    const savedPalette = localStorage.getItem('aarya_raakh_palette');
-    const savedDark = localStorage.getItem('aarya_raakh_dark');
+    const savedPalette = localStorage.getItem('Aaryavart_Integrated_Services_palette');
+    const savedDark = localStorage.getItem('Aaryavart_Integrated_Services_dark');
 
     if (savedPalette && COLOR_PALETTES.some((p) => p.id === savedPalette)) {
       setPaletteId(savedPalette);
@@ -49,13 +49,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setPalette = (id: string) => {
     setPaletteId(id);
-    localStorage.setItem('aarya_raakh_palette', id);
+    localStorage.setItem('Aaryavart_Integrated_Services_palette', id);
   };
 
   const toggleDarkMode = () => {
     setIsDark((prev) => {
       const next = !prev;
-      localStorage.setItem('aarya_raakh_dark', String(next));
+      localStorage.setItem('Aaryavart_Integrated_Services_dark', String(next));
       return next;
     });
   };

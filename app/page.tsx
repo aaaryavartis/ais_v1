@@ -64,7 +64,7 @@ export default function HomePage() {
     },
     {
       title: 'Multiple Industries',
-      description: 'Specialized hiring across IT, Finance, Healthcare, and Executive sectors.',
+      description: 'Specialized hiring across IT, BFSI, Healthcare, Manufacturing, Engineering, Retail, and other key sectors.',
       icon: Building2,
     },
     {
@@ -105,7 +105,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto lg:mx-0">
-                <strong className="text-slate-900 dark:text-white">Aarya Raakh</strong> — Connecting Talent with Opportunities. We bridge the gap between ambitious professionals and industry-leading corporate employers.
+                <strong className="text-slate-900 dark:text-white">Aaryavart integrated services</strong> — Connecting Talent with Opportunities. We bridge the gap between ambitious professionals and industry-leading corporate employers.
               </p>
 
               {/* CTA Buttons */}
@@ -150,7 +150,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <div className="text-base font-extrabold text-slate-900 dark:text-white">
-                        Aarya Raakh
+                        Aaryavart integrated services
                       </div>
                       <div className="text-xs text-slate-500">Recruitment Excellence</div>
                     </div>
@@ -203,7 +203,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-5 space-y-4">
                 <span className="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
-                  About Aarya Raakh
+                  About Aaryavart integrated services
                 </span>
                 <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                   Connecting Employers with Exceptional Talent Across Industries
@@ -211,7 +211,7 @@ export default function HomePage() {
               </div>
               <div className="lg:col-span-7 space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 <p>
-                  At <strong>Aarya Raakh</strong>, we believe that an organization&apos;s success depends fundamentally on its talent. Founded with a vision to revolutionize traditional recruitment, we specialize in identifying, vetting, and matching high-caliber professionals with premier employers across India and internationally.
+                  At <strong>Aaryavart integrated services</strong>, we believe that an organization&apos;s success depends fundamentally on its talent. Founded with a vision to revolutionize traditional recruitment, we specialize in identifying, vetting, and matching high-caliber professionals with premier employers across India and internationally.
                 </p>
                 <p>
                   Whether you are an enterprise seeking specialized senior leadership or a candidate looking to elevate your career trajectory, our dedicated recruitment consultants provide personalized, confidential, and end-to-end recruitment solutions.
@@ -231,10 +231,10 @@ export default function HomePage() {
               Why Partner With Us
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              The Aarya Raakh Advantage
+              The Aaryavart integrated services Advantage
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Discover why top candidates and multinational corporations trust Aarya Raakh as their preferred recruitment partner.
+              Discover why top candidates and multinational corporations trust Aaryavart integrated services as their preferred recruitment partner.
             </p>
           </div>
 

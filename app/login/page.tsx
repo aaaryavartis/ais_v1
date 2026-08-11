@@ -35,7 +35,7 @@ export default function UnifiedLoginPage() {
   };
 
   const handleAutofillAdmin = () => {
-    setEmail('admin@aaryaraakh.com');
+    setEmail('aaryavart.services@gmail.com');
     setPassword('0999#jay');
     toast.info('Demo Admin credentials autofilled!');
   };
@@ -55,7 +55,7 @@ export default function UnifiedLoginPage() {
           <LogIn className="w-7 h-7" />
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Aarya Raakh Sign In
+          Aaryavart integrated services Sign In
         </h1>
         <p className="text-xs text-slate-500">
           Unified Login Portal for Candidates & Recruitment Admins
@@ -89,7 +89,7 @@ export default function UnifiedLoginPage() {
             <div className="font-bold text-purple-600 text-[11px] flex items-center gap-1">
               <ShieldCheck className="w-3 h-3" /> Admin Portal
             </div>
-            <div className="text-[10px] text-slate-500 truncate">admin@aaryaraakh.com</div>
+            <div className="text-[10px] text-slate-500 truncate">aaryavart.services@gmail.com</div>
           </button>
         </div>
       </div>

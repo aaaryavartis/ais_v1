@@ -49,7 +49,7 @@ export default function AdminDashboardPage() {
     const checkAuth = async () => {
       if (typeof window !== 'undefined') {
         const currentUser = await UserService.getCurrentUser();
-        const legacyAdminSession = localStorage.getItem('aarya_raakh_admin_session');
+        const legacyAdminSession = localStorage.getItem('Aaryavart_Integrated_Services_admin_session');
 
         if (!currentUser && !legacyAdminSession) {
           router.push('/login');
@@ -163,7 +163,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="py-20 flex flex-col items-center justify-center space-y-3">
         <Loader2 className="w-8 h-8 text-brand-600 animate-spin" />
-        <p className="text-xs text-slate-500 font-medium">Loading Aarya Raakh Admin Dashboard...</p>
+        <p className="text-xs text-slate-500 font-medium">Loading Aaryavart integrated services Admin Dashboard...</p>
       </div>
     );
   }

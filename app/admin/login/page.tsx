@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
 
     // Set demo admin session cookie/storage
     if (typeof window !== 'undefined') {
-      localStorage.setItem('aarya_raakh_admin_session', 'true');
+      localStorage.setItem('Aaryavart_Integrated_Services_admin_session', 'true');
     }
 
     setLoading(false);
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
   };
 
   const handleAutofillDemo = () => {
-    setEmail('admin@aaryaraakh.com');
+    setEmail('aaryavart.services@gmail.com');
     setPassword('0999#jay');
     toast.info('Demo admin credentials autofilled!');
   };
@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
           <ShieldCheck className="w-8 h-8" />
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Aarya Raakh Admin Portal
+          Aaryavart integrated services Admin Portal
         </h1>
         <p className="text-xs text-slate-500">
           Restricted administrative access for job posting & application management
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
           <span>Demo Admin Credentials</span>
         </div>
         <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
-          <strong>Email:</strong> admin@aaryaraakh.com <br />
+          <strong>Email:</strong> aaryavart.services@gmail.com <br />
           <strong>Password:</strong> Admin@12345
         </p>
         <button
@@ -108,7 +108,7 @@ export default function AdminLoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@aaryaraakh.com"
+                placeholder="aaryavart.services@gmail.com"
                 className="w-full pl-10 pr-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500"
               />
             </div>

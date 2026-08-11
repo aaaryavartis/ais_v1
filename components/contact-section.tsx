@@ -44,7 +44,7 @@ export function ContactSection() {
             Connect With Our Executive Recruitment Team
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            Have questions about candidate sourcing or looking for your next career move? Reach out to Aarya Raakh today.
+            Have questions about candidate sourcing or looking for your next career move? Reach out to Aaryavart integrated services today.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export function ContactSection() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Email Inquiry</h4>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">careers@aaryaraakh.com</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">aaryavart.services@gmail.com</p>
                 <p className="text-xs text-slate-500">Fast response within 24 hours</p>
               </div>
             </div>
@@ -72,14 +72,14 @@ export function ContactSection() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Direct Hotline</h4>
-                <p className="text-sm font-bold text-slate-900 dark:text-white">+91 98200 12345</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">9529890296</p>
                 <p className="text-xs text-slate-500">Mon - Sat, 9:00 AM - 7:00 PM IST</p>
               </div>
             </div>
 
             {/* WhatsApp Quick Connect */}
             <a
-              href="https://wa.me/919820012345?text=Hello%20Aarya%20Raakh%20Recruitment"
+              href="https://wa.me/919529890296?text=Hello%20Aarya%20Raakh%20Recruitment"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card rounded-3xl p-5 border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 flex items-center justify-between transition group"
@@ -90,7 +90,7 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">WhatsApp Connect</h4>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">+91 98200 12345</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">9529890296</p>
                 </div>
               </div>
               <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
@@ -106,9 +106,9 @@ export function ContactSection() {
               <div>
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Headquarters</h4>
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
-                  Executive Towers, Level 8, Bandra Kurla Complex (BKC)
+                  swami vivekanand nagar , makhmalabad , nashik
                 </p>
-                <p className="text-xs text-slate-500">Mumbai, Maharashtra 400051, India</p>
+                <p className="text-xs text-slate-500">, India</p>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export function ContactSection() {
                 <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
                 <h4 className="text-lg font-bold text-slate-900 dark:text-white">Message Received!</h4>
                 <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  Thank you for reaching out. An executive recruiter from Aarya Raakh will respond to your inquiry within 24 hours.
+                  Thank you for reaching out. An executive recruiter from Aaryavart integrated services will respond to your inquiry within 24 hours.
                 </p>
                 <button
                   onClick={() => setIsSent(false)}

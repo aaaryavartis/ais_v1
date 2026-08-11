@@ -1,11 +1,11 @@
 <<<<<<< HEAD
 # ais_v1
 =======
-# Aarya Raakh - Recruitment Agency Website
+# Aaryavart integrated services - Recruitment Agency Website
 
 A modern, high-performance, iOS-inspired recruitment agency website built with **Next.js 14/15 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **Supabase**.
 
-![Aarya Raakh Recruitment](public/hero-banner.jpg)
+![Aaryavart integrated services Recruitment](public/hero-banner.jpg)
 
 ## 🌟 Key Features
 
@@ -39,7 +39,7 @@ A modern, high-performance, iOS-inspired recruitment agency website built with *
 ### Admin Portal Credentials (Demo Mode)
 
 * **Admin Login URL**: `/admin/login` or `/admin`
-* **Email**: `admin@aaryaraakh.com`
+* **Email**: `aaryavart.services@gmail.com`
 * **Password**: `Admin@12345`
 
 ---
@@ -64,7 +64,7 @@ Ensure Node.js 18+ is installed on your machine.
 
 ### 2. Clone & Install Dependencies
 ```bash
-cd aarya-raakh-recruitment
+cd aaryavart-integrated-services-recruitment
 npm install
 ```
 
@@ -86,7 +86,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
    * Anon Public Key -> `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 5. Paste these values into `.env.local` or environment variables in Netlify.
 6. Create an Admin User in Supabase Auth (**Authentication -> Users**):
-   * Email: `admin@aaryaraakh.com`
+   * Email: `aaryavart.services@gmail.com`
    * Password: `YourSecurePassword`
 
 ---
@@ -106,5 +106,5 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📜 License
 
-Copyright © 2026 **Aarya Raakh Recruitment Agency**. All rights reserved.
->>>>>>> 2e9461e (Initial commit: Aarya Raakh Recruitment Agency Website)
+Copyright © 2026 **Aaryavart integrated services Recruitment Agency**. All rights reserved.
+>>>>>>> 2e9461e (Initial commit: Aaryavart integrated services Recruitment Agency Website)

@@ -118,7 +118,7 @@ export default function CandidateLoginPage() {
         </form>
 
         <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">
-          New to Aarya Raakh?{' '}
+          New to Aaryavart integrated services?{' '}
           <Link href="/candidate/register" className="font-bold text-brand-600 hover:underline">
             Register Candidate Account
           </Link>
