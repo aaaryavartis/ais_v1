@@ -4,7 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Building2, Mail, Phone, MapPin, Heart, ArrowUpRight } from 'lucide-react';
 
+import { usePathname } from 'next/navigation';
+
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) return null;
+
   return (
     <footer className="mt-20 border-t border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">

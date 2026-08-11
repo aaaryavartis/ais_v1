@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageSquare, MapPin, Send, CheckCircle2, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
 import { toast } from 'sonner';
+import { DataService } from '@/lib/data-service';
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       toast.error('Please fill in all required fields.');
@@ -23,12 +24,23 @@ export function ContactSection() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await DataService.submitContactMessage({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+      });
       setIsSent(true);
       toast.success('Your message has been sent successfully!');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-    }, 1000);
+    } catch (err: any) {
+      console.error('Error submitting contact form:', err);
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

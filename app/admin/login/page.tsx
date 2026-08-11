@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
         </div>
         <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
           <strong>Email:</strong> aaryavart.services@gmail.com <br />
-          <strong>Password:</strong> Admin@12345
+          <strong>Password:</strong> 0999#jay
         </p>
         <button
           type="button"

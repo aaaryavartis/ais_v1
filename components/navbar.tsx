@@ -20,6 +20,8 @@ export function Navbar() {
     fetchUser();
   }, [pathname]);
 
+  if (pathname?.startsWith('/admin')) return null;
+
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/jobs', label: 'Job Openings' },

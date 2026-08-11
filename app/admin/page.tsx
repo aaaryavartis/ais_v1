@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Job, Application, ResumeBankEntry, UserAccount, UserRole } from '@/lib/types';
+import { Job, Application, ResumeBankEntry, UserAccount, UserRole, ContactMessage } from '@/lib/types';
 import { DataService } from '@/lib/data-service';
 import { UserService } from '@/lib/user-service';
 import { StatsCard } from '@/components/admin/stats-card';
@@ -11,6 +11,7 @@ import { JobFormModal } from '@/components/admin/job-form-modal';
 import { ApplicationsTable } from '@/components/admin/applications-table';
 import { ResumeBankTable } from '@/components/admin/resume-bank-table';
 import { UsersTable } from '@/components/admin/users-table';
+import { ContactMessagesTable } from '@/components/admin/contact-messages-table';
 
 import {
   LayoutDashboard,
@@ -24,10 +25,11 @@ import {
   AlertTriangle,
   Loader2,
   Shield,
+  MessageSquare,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-type AdminTab = 'overview' | 'jobs' | 'applications' | 'resume_bank' | 'users';
+type AdminTab = 'overview' | 'jobs' | 'applications' | 'resume_bank' | 'users' | 'messages';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -37,6 +39,7 @@ export default function AdminDashboardPage() {
   const [applications, setApplications] = useState<Application[]>([]);
   const [resumeBank, setResumeBank] = useState<ResumeBankEntry[]>([]);
   const [usersList, setUsersList] = useState<UserAccount[]>([]);
+  const [contactMessages, setContactMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Modals state
@@ -70,16 +73,18 @@ export default function AdminDashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [jobsData, appsData, rbData] = await Promise.all([
-        DataService.getJobs(),
-        DataService.getApplications(),
-        DataService.getResumeBank(),
-      ]);
-      const usersData = await UserService.getAllUsers();
-      setJobs(jobsData);
-      setApplications(appsData);
-      setResumeBank(rbData);
-      setUsersList(usersData);
+        const [fetchedJobs, fetchedApps, fetchedResumes, fetchedUsers, fetchedMessages] = await Promise.all([
+          DataService.getJobs(),
+          DataService.getApplications(),
+          DataService.getResumeBank(),
+          UserService.getAllUsers(),
+          DataService.getAllContactMessages(),
+        ]);
+        setJobs(fetchedJobs);
+        setApplications(fetchedApps);
+        setResumeBank(fetchedResumes);
+        setUsersList(fetchedUsers);
+        setContactMessages(fetchedMessages);
     } catch (e) {
       console.error('Error fetching admin dashboard data:', e);
       toast.error('Failed to load dashboard metrics');
@@ -216,6 +221,7 @@ export default function AdminDashboardPage() {
           { id: 'applications', label: `Applications (${applications.length})`, icon: Users },
           { id: 'resume_bank', label: `Resume Bank (${resumeBank.length})`, icon: FileSearch },
           { id: 'users', label: `Users & Permissions (${usersList.length})`, icon: Shield },
+          { id: 'messages', label: `Messages (${contactMessages.length})`, icon: MessageSquare },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -387,6 +393,8 @@ export default function AdminDashboardPage() {
           onStatusToggle={handleUserStatusToggle}
         />
       )}
+
+      {activeTab === 'messages' && <ContactMessagesTable messages={contactMessages} />}
 
       {/* Job Add/Edit Form Modal */}
       <JobFormModal

@@ -1,4 +1,4 @@
-import { Job, Application, ResumeBankEntry, JobFilters } from './types';
+import { Job, Application, ResumeBankEntry, JobFilters, ContactMessage } from './types';
 import { createClient } from './supabase/client';
 
 export const DataService = {
@@ -197,5 +197,23 @@ export const DataService = {
 
     const { data } = supabase.storage.from('resumes').getPublicUrl(filePath);
     return data.publicUrl;
+  },
+
+  // CONTACT MESSAGES
+  async submitContactMessage(messageData: Omit<ContactMessage, 'id' | 'created_at'>): Promise<ContactMessage> {
+    const supabase = createClient();
+    const { data, error } = await supabase.from('contact_messages').insert([messageData]).select().single();
+    if (error) throw error;
+    return data as ContactMessage;
+  },
+
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('contact_messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    return data as ContactMessage[];
   },
 };
