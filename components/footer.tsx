@@ -88,10 +88,7 @@ export function Footer() {
                 <Mail className="w-4 h-4 text-brand-600 shrink-0" />
                 <span>careers@aaryavartservices.com</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-brand-600 shrink-0" />
-                <span>9529890296</span>
-              </li>
+
             </ul>
           </div>
         </div>
