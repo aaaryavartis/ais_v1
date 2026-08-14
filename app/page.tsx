@@ -7,6 +7,7 @@ import { DataService } from '@/lib/data-service';
 import { JobCard } from '@/components/job-card';
 import { ApplyModal } from '@/components/apply-modal';
 import { ContactSection } from '@/components/contact-section';
+import { Fireworks } from '@/components/fireworks';
 import {
   Briefcase,
   FileUp,
@@ -81,7 +82,7 @@ export default function HomePage() {
 
   return (
     <div className="space-y-20 pb-12">
-      
+      <Fireworks />
       {/* 1. HERO SECTION */}
       <section className="relative pt-8 pb-16 overflow-hidden">
         {/* Background Decorative Blur Orbs */}
