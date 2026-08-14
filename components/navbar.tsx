@@ -40,11 +40,11 @@ export function Navbar() {
           {/* Logo & Branding */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
-              <img src="/logo.svg" alt="Aaryavart integrated services Logo" className="w-full h-full object-contain" />
+              <img src="/logo.svg" alt="Aaryavart Integrated Services Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                Aaryavart integrated services
+                Aaryavart Integrated Services
                 <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
               </div>
               <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 tracking-wide hidden sm:block">

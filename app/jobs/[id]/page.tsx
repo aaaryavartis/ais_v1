@@ -103,7 +103,7 @@ export default function JobDetailsPage() {
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {job.title}
             </h1>
-            <p className="text-xs text-slate-500">Aaryavart integrated services Recruitment Partner Placement</p>
+            <p className="text-xs text-slate-500">Aaryavart Integrated Services Recruitment Partner Placement</p>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">

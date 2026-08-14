@@ -2,11 +2,17 @@
 
 import React, { useState } from 'react';
 import { useTheme } from './theme-provider';
+import { usePathname } from 'next/navigation';
 import { Palette, Moon, Sun, X, Check, Sparkles } from 'lucide-react';
 
 export function ThemeSwitcher() {
   const { currentPalette, setPalette, isDark, toggleDarkMode, availablePalettes } = useTheme();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  if (!pathname.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <>

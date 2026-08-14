@@ -34,17 +34,6 @@ export default function UnifiedLoginPage() {
     }
   };
 
-  const handleAutofillAdmin = () => {
-    setEmail('aaryavart.services@gmail.com');
-    setPassword('0999#jay');
-    toast.info('Demo Admin credentials autofilled!');
-  };
-
-  const handleAutofillCandidate = () => {
-    setEmail('jaygangurde8@gmail.com');
-    setPassword('Candidate@123');
-    toast.info('Demo Candidate credentials autofilled!');
-  };
 
   return (
     <div className="py-16 mx-auto max-w-md px-4 sm:px-6 space-y-8">
@@ -55,44 +44,13 @@ export default function UnifiedLoginPage() {
           <LogIn className="w-7 h-7" />
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Aaryavart integrated services Sign In
+          Aaryavart Integrated Services Sign In
         </h1>
         <p className="text-xs text-slate-500">
           Unified Login Portal for Candidates & Recruitment Admins
         </p>
       </div>
 
-      {/* Demo Account Switcher Banner */}
-      <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs space-y-3">
-        <div className="flex items-center gap-2 font-bold text-amber-900 dark:text-amber-200">
-          <Info className="w-4 h-4 text-amber-600 shrink-0" />
-          <span>Quick Demo Account Autofills:</span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={handleAutofillCandidate}
-            className="p-2 rounded-xl bg-white dark:bg-slate-800 border border-amber-500/30 hover:border-brand-500 text-left transition"
-          >
-            <div className="font-bold text-brand-600 text-[11px] flex items-center gap-1">
-              <UserCheck className="w-3 h-3" /> Candidate Login
-            </div>
-            <div className="text-[10px] text-slate-500 truncate">jaygangurde8@gmail.com</div>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleAutofillAdmin}
-            className="p-2 rounded-xl bg-white dark:bg-slate-800 border border-amber-500/30 hover:border-purple-500 text-left transition"
-          >
-            <div className="font-bold text-purple-600 text-[11px] flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" /> Admin Portal
-            </div>
-            <div className="text-[10px] text-slate-500 truncate">aaryavart.services@gmail.com</div>
-          </button>
-        </div>
-      </div>
 
       {/* Login Form Card */}
       <div className="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 space-y-6">

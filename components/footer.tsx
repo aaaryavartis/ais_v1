@@ -19,10 +19,10 @@ export function Footer() {
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden">
-                <img src="/logo.svg" alt="Aaryavart integrated services Logo" className="w-full h-full object-contain" />
+                <img src="/logo.svg" alt="Aaryavart Integrated Services Logo" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold text-slate-900 dark:text-white">
-                Aaryavart integrated services
+                Aaryavart Integrated Services
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -82,11 +82,11 @@ export function Footer() {
             <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-brand-600 shrink-0" />
-                <span>swami vivekanand nagar , makhmalabad , nashik</span>
+                <span>Swami Vivekanand Nagar, Makhmalabad, Nashik</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-brand-600 shrink-0" />
-                <span>aaryavart.services@gmail.com</span>
+                <span>careers@aaryavartservices.com</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-brand-600 shrink-0" />
@@ -98,7 +98,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-slate-200/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Aaryavart integrated services Recruitment Agency. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Aaryavart Integrated Services Recruitment Agency. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span className="hover:underline cursor-pointer">Privacy Policy</span>
             <span>•</span>

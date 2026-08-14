@@ -105,7 +105,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-2xl mx-auto lg:mx-0">
-                <strong className="text-slate-900 dark:text-white">Aaryavart integrated services</strong> — Connecting Talent with Opportunities. We bridge the gap between ambitious professionals and industry-leading corporate employers.
+                <strong className="text-slate-900 dark:text-white">Aaryavart Integrated Services</strong> — Connecting Talent with Opportunities. We bridge the gap between ambitious professionals and industry-leading corporate employers.
               </p>
 
               {/* CTA Buttons */}
@@ -126,19 +126,8 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Quick Trust Badges */}
-              <div className="pt-6 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-center lg:justify-start gap-6 text-xs text-slate-500">
-                <span className="flex items-center gap-1.5 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 500+ Placements
-                </span>
-                <span className="flex items-center gap-1.5 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 150+ Corporate Partners
-                </span>
-                <span className="flex items-center gap-1.5 font-semibold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> 98% Satisfaction
-                </span>
               </div>
-            </div>
+
 
             {/* Right Card / Visual Feature */}
             <div className="lg:col-span-5">
@@ -150,7 +139,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <div className="text-base font-extrabold text-slate-900 dark:text-white">
-                        Aaryavart integrated services
+                        Aaryavart Integrated Services
                       </div>
                       <div className="text-xs text-slate-500">Recruitment Excellence</div>
                     </div>
@@ -203,7 +192,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-5 space-y-4">
                 <span className="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
-                  About Aaryavart integrated services
+                  About Aaryavart Integrated Services
                 </span>
                 <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                   Connecting Employers with Exceptional Talent Across Industries
@@ -211,7 +200,7 @@ export default function HomePage() {
               </div>
               <div className="lg:col-span-7 space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 <p>
-                  At <strong>Aaryavart integrated services</strong>, we believe that an organization&apos;s success depends fundamentally on its talent. Founded with a vision to revolutionize traditional recruitment, we specialize in identifying, vetting, and matching high-caliber professionals with premier employers across India and internationally.
+                  At <strong>Aaryavart Integrated Services</strong>, we believe that an organization&apos;s success depends fundamentally on its talent. Founded with a vision to revolutionize traditional recruitment, we specialize in identifying, vetting, and matching high-caliber professionals with premier employers across India and internationally.
                 </p>
                 <p>
                   Whether you are an enterprise seeking specialized senior leadership or a candidate looking to elevate your career trajectory, our dedicated recruitment consultants provide personalized, confidential, and end-to-end recruitment solutions.
@@ -231,10 +220,10 @@ export default function HomePage() {
               Why Partner With Us
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              The Aaryavart integrated services Advantage
+              The Aaryavart Integrated Services Advantage
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Discover why top candidates and multinational corporations trust Aaryavart integrated services as their preferred recruitment partner.
+              Discover why top candidates and multinational corporations trust Aaryavart Integrated Services as their preferred recruitment partner.
             </p>
           </div>
 

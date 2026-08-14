@@ -168,7 +168,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="py-20 flex flex-col items-center justify-center space-y-3">
         <Loader2 className="w-8 h-8 text-brand-600 animate-spin" />
-        <p className="text-xs text-slate-500 font-medium">Loading Aaryavart integrated services Admin Dashboard...</p>
+        <p className="text-xs text-slate-500 font-medium">Loading Aaryavart Integrated Services Admin Dashboard...</p>
       </div>
     );
   }

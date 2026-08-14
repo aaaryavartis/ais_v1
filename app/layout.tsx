@@ -7,9 +7,9 @@ import { ThemeSwitcher } from '@/components/theme-switcher';
 import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
-  title: 'Aaryavart integrated services | Connecting Talent with Opportunities',
-  description: 'Aaryavart integrated services is a premier executive recruitment agency connecting top talent with corporate opportunities across IT, BFSI, Healthcare, Manufacturing, Engineering, and more.',
-  keywords: ['Recruitment Agency', 'Executive Search', 'Jobs in India', 'IT Hiring', 'Aaryavart integrated services', 'Career Opportunities'],
+  title: 'Aaryavart Integrated Services | Connecting Talent with Opportunities',
+  description: 'Aaryavart Integrated Services is a premier executive recruitment agency connecting top talent with corporate opportunities across IT, BFSI, Healthcare, Manufacturing, Engineering, and more.',
+  keywords: ['Recruitment Agency', 'Executive Search', 'Jobs in India', 'IT Hiring', 'Aaryavart Integrated Services', 'Career Opportunities'],
 };
 
 export default function RootLayout({

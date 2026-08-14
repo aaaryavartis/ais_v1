@@ -96,7 +96,7 @@ export default function JobsPage() {
           Explore Current Job Openings
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Discover verified roles across top corporate organizations partnered with Aaryavart integrated services.
+          Discover verified roles across top corporate organizations partnered with Aaryavart Integrated Services.
         </p>
       </div>
 

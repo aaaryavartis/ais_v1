@@ -51,12 +51,6 @@ export default function AdminLoginPage() {
     router.push('/admin');
   };
 
-  const handleAutofillDemo = () => {
-    setEmail('aaryavart.services@gmail.com');
-    setPassword('0999#jay');
-    toast.info('Demo admin credentials autofilled!');
-  };
-
   return (
     <div className="py-16 mx-auto max-w-md px-4 sm:px-6 space-y-8">
       
@@ -66,30 +60,11 @@ export default function AdminLoginPage() {
           <ShieldCheck className="w-8 h-8" />
         </div>
         <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Aaryavart integrated services Admin Portal
+          Aaryavart Integrated Services Admin Portal
         </h1>
         <p className="text-xs text-slate-500">
           Restricted administrative access for job posting & application management
         </p>
-      </div>
-
-      {/* Demo Credentials Alert Banner */}
-      <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-900 dark:text-amber-200 text-xs space-y-2">
-        <div className="flex items-center gap-2 font-bold">
-          <Info className="w-4 h-4 text-amber-600 shrink-0" />
-          <span>Demo Admin Credentials</span>
-        </div>
-        <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
-          <strong>Email:</strong> aaryavart.services@gmail.com <br />
-          <strong>Password:</strong> 0999#jay
-        </p>
-        <button
-          type="button"
-          onClick={handleAutofillDemo}
-          className="text-[11px] font-bold text-brand-600 hover:underline pt-1 block"
-        >
-          Click to Autofill Demo Credentials →
-        </button>
       </div>
 
       {/* Login Form Card */}
@@ -108,7 +83,7 @@ export default function AdminLoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="aaryavart.services@gmail.com"
+                placeholder="careers@aaryavartservices.com"
                 className="w-full pl-10 pr-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-500"
               />
             </div>
